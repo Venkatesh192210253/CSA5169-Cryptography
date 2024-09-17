@@ -1,0 +1,22 @@
+#include <stdio.h>
+int main() {
+    char text[100];
+    int i,k;
+    char c;
+    printf("Enter text: ");
+    scanf("%s", text);
+    char plain[100];
+    printf("Enter shift: ");
+    scanf("%d", &k);
+    for ( i = 0; text[i] != '\0'; i++) {
+        char c = text[i];
+        plain[i]=text[i];
+        if (c >= 'A' && c <= 'Z') 
+            text[i] = (c - 'A' + k) % 26 + 'A';
+        else if (c >= 'a' && c <= 'z') 
+            text[i] = (c - 'a' + k) % 26 + 'a';
+    }
+    printf("Encrypted text: %s\n", text);
+    printf("After Encryption: %s\n",plain);
+    return 0;
+}
