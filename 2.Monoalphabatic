@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main() {
+	int i,k;
+    char text[100];
+    char key[27];
+    char plaintextAlphabet[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    printf("Enter a message: ");
+    fgets(text, sizeof(text), stdin);  
+    
+    printf("Enter the 26-letter substitution key (A-Z): ");
+    scanf("%s", key);
+    int j;
+    if (strlen(key) != 26) {
+        printf("Error: Key must be exactly 26 characters long.\n");
+        return 1;
+    }
+    for (i = 0; text[i] != '\0'; ++i) {
+        char ch = text[i];
+        if (isupper(ch)) {
+            for ( j = 0; j < 26; ++j) {
+                if (ch == plaintextAlphabet[j]) {
+                    text[i] = key[j];
+                    break;
+                }
+            }
+        }
+        else if (islower(ch)) {
+            for (j = 0; j < 26; ++j) {
+                if (toupper(ch) == plaintextAlphabet[j]) {
+                    text[i] = tolower(key[j]);
+                    break;
+                }
+            }
+        }
+    }
+
+    printf("Encrypted message: %s\n", text);
+    return 0;
+}
