@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 30
+
+void toLowerCase(char plain[], int ps) {
+    for (int i = 0; i < ps; i++) {
+        if (plain[i] >= 'A' && plain[i] <= 'Z') 
+            plain[i] += 32;
+    }
+}
+
+int removeSpaces(char* plain, int ps) {
+    int count = 0;
+    for (int i = 0; i < ps; i++) {
+        if (plain[i] != ' ') 
+            plain[count++] = plain[i];
+    }
+    plain[count] = '\0';
+    return count;
+}
+
+void generateKeyTable(char key[], int ks, char keyT[5][5]) {
+    int dicty[26] = {0};
+    for (int i = 0; i < ks; i++) {
+        if (key[i] != 'j') dicty[key[i] - 'a'] = 1;
+    }
+    dicty['j' - 'a'] = 1;
+
+    int k = 0;
+    for (int i = 0; i < ks; i++) {
+        if (dicty[key[i] - 'a'] == 1) {
+            keyT[k / 5][k % 5] = key[i];
+            dicty[key[i] - 'a'] = 0;
+            k++;
+        }
+    }
+
+    for (char c = 'a'; c <= 'z'; c++) {
+        if (dicty[c - 'a'] == 0) {
+            keyT[k / 5][k % 5] = c;
+            k++;
+        }
+    }
+}
+
+void encryptByPlayfairCipher(char str[], char key[]) {
+    char keyT[5][5];
+    int ks = removeSpaces(key, strlen(key));
+    toLowerCase(key, ks);
+    
+    generateKeyTable(key, ks, keyT);
+
+    // Encryption logic would go here
+}
+
+int main() {
+    char str[SIZE], key[SIZE];
+    
+    strcpy(key, "HOWAREYOU");
+    printf("Key text: %s\n", key);
+    
+    strcpy(str, "NEVERGIVEUP");
+    printf("Plain text: %s\n", str);
+    
+    encryptByPlayfairCipher(str, key);
+    
+    printf("Cipher text: %s\n", str); // Placeholder for actual encrypted text
+    return 0;
+}
